@@ -100,8 +100,29 @@ public class SellerDaoJdbc implements SellerDao {
 
 	@Override
 	public List<Seller> findAll() {
-		// TODO Auto-generated method stub
-		return null;
+
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		try {
+			st =
+			  conn.prepareStatement(  
+			 " SELECT seller.*,department.name as depname " + 
+			 " FROM seller INNER JOIN department " + 
+			 " ON seller.department_id = department.id order by name "); 
+			rs = st.executeQuery();
+			List<Seller> sellers = instantiateSellers(rs);
+			return sellers;
+		}
+		catch(SQLException e) {
+			
+			throw new DbException(e.getMessage());
+			
+		}
+		finally {
+			DB.closeStatement(st);
+			DB.closeResultSet(rs);
+		}
+		
 	}
 
 
@@ -119,7 +140,7 @@ public class SellerDaoJdbc implements SellerDao {
 			 " WHERE department_id = ? ORDER BY name ");  
 			st.setInt(1, department.getId());
 			rs = st.executeQuery();
-			List<Seller> sellers = instantiateSellers(rs,department);
+			List<Seller> sellers = instantiateSellers(rs);
 			return sellers;
 		}
 		catch(SQLException e) {
@@ -135,13 +156,13 @@ public class SellerDaoJdbc implements SellerDao {
 	}
 
 
-	private List<Seller> instantiateSellers(ResultSet rs, Department department) throws SQLException {
+	private List<Seller> instantiateSellers(ResultSet rs) throws SQLException {
 
 		List<Seller> sellers = new ArrayList<>();
+		
 		Map<Integer, Department> map = new HashMap<>();
-		int x = 0;
+		
 		while(rs.next()) {
-			x=+1;
 			Department dep = map.get(rs.getInt("department_id")); // instancia departamneto já mapeado em map 
 			
 			if(dep == null) {
