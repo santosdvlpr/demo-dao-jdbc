@@ -29,13 +29,23 @@ public class Program {
 		for (Seller obj : sellers) {
 			System.out.println(obj);
 		}
-	
+		
 		System.out.println("\n===  Teste Nº 4 Insert ===");
-		Seller newSeller = new Seller(null,"Humberto S Pinto","humbdsp@hotmail.com",new Date(), 5800.00,dep);
+		Seller newSeller = new Seller(null,"Joana Darc C Pinto","joanadarc@hotmail.com",new Date(), 5800.00,dep);
 		sellerDao.insert(newSeller);
 		System.out.println();
 		System.out.printf("Nova chave inserida:%d",newSeller.getId());
-	
+		System.out.println();
+		
+		System.out.println("\n===  Teste Nº 5 Update ===");
+		seller = sellerDao.findById(8);
+		seller.setName("Heitor P Santana");
+		seller.setEmail("giselle_cp@hotmail.com");
+		sellerDao.update(seller);
+		sellers = sellerDao.findAll();
+		for (Seller obj : sellers) {
+			System.out.println(obj);
+		}
 	}
 
 }

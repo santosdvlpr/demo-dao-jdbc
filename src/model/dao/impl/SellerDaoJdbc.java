@@ -63,8 +63,32 @@ public class SellerDaoJdbc implements SellerDao {
 
 	@Override
 	public void update(Seller obj) {
-		// TODO Auto-generated method stub
+		PreparedStatement st = null;
 		
+		try {
+			st = conn.prepareStatement(
+					"update seller set name = ?, email = ?, birthdate = ?, basesalary = ?, department_id= ? " +
+					" where id = ? "); 
+			st.setString(1, obj.getName());
+			st.setString(2, obj.getEmail());
+			st.setDate(3, new java.sql.Date(obj.getBirthdate().getTime()));
+			st.setDouble(4, obj.getBasesalary());
+			st.setInt(5, obj.getDepartment().getId());
+			st.setInt(6, obj.getId());
+		
+			int rowsAfecteds =  st.executeUpdate();
+			if(rowsAfecteds> 0) {
+				// faça nada
+			}
+			else {
+				
+				throw new DbException("Erro não esperado. Nenhuma linha atualizada!.");
+			}	
+		}
+		catch(SQLException e) {
+
+			throw new DbException(e.getMessage());
+		}
 	}
 
 	@Override
