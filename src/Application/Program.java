@@ -2,6 +2,7 @@ package Application;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Scanner;
 
 import model.dao.DaoFactory;
 import model.dao.SellerDao;
@@ -46,6 +47,17 @@ public class Program {
 		for (Seller obj : sellers) {
 			System.out.println(obj);
 		}
+
+		System.out.println();
+		System.out.println("\n===  Teste Nº 6 Delete ===");
+		System.out.println();
+		System.out.println("Informe o id a excluir :");
+		Scanner sc = new Scanner(System.in); 
+		int id =  sc.nextInt();
+		sellerDao.deleteById(id);
+		System.out.println("id excluido com sucesso.!");
+		System.out.println();
+		sc.close();
 	}
 
 }

@@ -93,8 +93,24 @@ public class SellerDaoJdbc implements SellerDao {
 
 	@Override
 	public void deleteById(Integer id) {
-		// TODO Auto-generated method stub
 		
+		PreparedStatement st = null;
+		try {
+			st = conn.prepareStatement(" Delete from seller where id=? ");
+			st.setInt(1, id);
+			int rowsAfecteds = st.executeUpdate();
+			if(rowsAfecteds > 0) {
+				// faça nada
+			}
+			else {
+			
+				throw new DbException("Erro não esperado. Nenhuma linha excluida!.");
+			}	
+		}
+		catch(SQLException e) {
+
+			throw new DbException(e.getMessage());
+		}
 	}
 
 	@Override
