@@ -1,5 +1,6 @@
 package Application;
 
+import java.util.Date;
 import java.util.List;
 
 import model.dao.DaoFactory;
@@ -28,6 +29,12 @@ public class Program {
 		for (Seller obj : sellers) {
 			System.out.println(obj);
 		}
+	
+		System.out.println("\n===  Teste Nº 4 Insert ===");
+		Seller newSeller = new Seller(null,"Humberto S Pinto","humbdsp@hotmail.com",new Date(), 5800.00,dep);
+		sellerDao.insert(newSeller);
+		System.out.println();
+		System.out.printf("Nova chave inserida:%d",newSeller.getId());
 	
 	}
 
